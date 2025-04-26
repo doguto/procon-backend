@@ -37,7 +37,7 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
 LayOut/EndOfLine:
-  EnforcedStyle: crlf
+  EnforcedStyle: lf
 
 # 日本語にコメントを許可
 Style/AsciiComments:
@@ -62,6 +62,9 @@ Style/GuardClause:
 # 文字列のダブルクォートチェック
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Style/SpecialGlobalVars:
+  AllowedVariables: ['$0']
 
 Lint/UselessAssignment:
   Enabled: true
