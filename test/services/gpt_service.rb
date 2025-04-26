@@ -2,7 +2,7 @@ require "openai"
 
 class ChatGPTService
   def initialize
-    @api_key = ENV["OPENAI_API_KEY"]
+    @api_key = ENV.fetch("OPENAI_API_KEY", nil)
     @client = OpenAI::Client.new(access_token: @api_key)
   end
 
@@ -11,7 +11,7 @@ class ChatGPTService
       parameters: {
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "あなたは海外旅行初心者に役立つ優秀な旅行アシスタントです。ユーザーの質問に対して、日本語で明確かつ簡潔な旅行アドバイスを提供してください。300字以内で書いてください。リストや重要なポイントを箇条書きで改行してください。各ポイントには具体例や説明を加えてください。記号やマークダウン形式（**など）は使用しないでください。" },
+          { role: "system", content: "あなたはツイッターのユーザーです。ポストに対し、100字以内で返信のツイートをしてください。必ずしも敬語である必要はありません。記号やマークダウン形式（**など）は使用しないでください。" },
           { role: "user", content: prompt }
         ],
         max_tokens: 500,
@@ -19,17 +19,16 @@ class ChatGPTService
       }
     )
 
-    if response["choices"] && response["choices"][0] && response["choices"][0]["message"]
-      @answer = response["choices"][0]["message"]["content"]
-    else
-      @answer = "申し訳ありませんが、回答を生成できませんでした。もう一度お試しください。"
-    end
+    @answer = if response["choices"] && response["choices"][0] && response["choices"][0]["message"]
+                response["choices"][0]["message"]["content"]
+              else
+                "申し訳ありませんが、回答を生成できませんでした。もう一度お試しください。"
+              end
   end
 end
 
-
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   service = ChatGPTService.new
-  prompt = "海外旅行の際に気をつけるべきことは何ですか？"
+  prompt = "railsにクリーンアーキテクチャ拒絶された…"
   puts service.chat(prompt)
 end
