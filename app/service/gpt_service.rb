@@ -2,8 +2,7 @@ require "openai"
 
 class ChatGPTService
   def initialize
-    @api_key = ENV.fetch("OPENAI_API_KEY", nil)
-    @client = OpenAI::Client.new(access_token: @api_key)
+    @client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY", nil))
   end
 
   def chat(prompt)
@@ -30,5 +29,5 @@ end
 if __FILE__ == $PROGRAM_NAME
   service = ChatGPTService.new
   prompt = "railsにクリーンアーキテクチャ拒絶された…"
-  puts service.chat(prompt)
+  Rails.logger.info service.chat(prompt)
 end
