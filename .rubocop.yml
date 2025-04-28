@@ -37,7 +37,7 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
 LayOut/EndOfLine:
-  EnforcedStyle: lf
+  EnforcedStyle: crlf
 
 # 日本語にコメントを許可
 Style/AsciiComments:
