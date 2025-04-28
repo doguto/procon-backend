@@ -55,3 +55,5 @@ end
 group :production do
   gem "mysql2", ">= 0.5.3"
 end
+
+gem "openai", "~> 0.3.0"
