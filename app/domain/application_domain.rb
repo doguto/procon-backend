@@ -1,3 +1,5 @@
 class ApplicationDomain
-  primary_abstract_class
+  def execute
+    raise "implement this method in subclass"
+  end
 end

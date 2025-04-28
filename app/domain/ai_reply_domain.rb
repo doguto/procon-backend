@@ -1,6 +1,6 @@
-class ReplyDomain < ApplicationDomain
+class AIReplyDomain < ApplicationDomain
   def initialize
-    super.initialize
+    super
 
     @gpt_service = ChatGPTService.new
   end
