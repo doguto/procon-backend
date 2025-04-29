@@ -36,6 +36,7 @@ gem "rack-cors"
 
 gem "dotenv-rails"
 gem "ruby-openai"
+gem "ruby-lsp"
 
 gem "rubocop", require: false
 
