@@ -1,6 +1,4 @@
 class Post < ApplicationRecord
-  validates :post_id, presence: true
-  validates :user_id, presence: true
-  validates :text, presence: true
-  validates :created_at, presence: true
+  belongs_to :user
+  validates :content, presence: true
 end

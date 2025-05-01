@@ -75,7 +75,6 @@ GEM
     ast (2.4.3)
     base64 (0.2.0)
     bcrypt_pbkdf (1.1.1)
-    bcrypt_pbkdf (1.1.1-x64-mingw-ucrt)
     benchmark (0.4.0)
     bigdecimal (3.1.9)
     bootsnap (1.18.4)
@@ -170,6 +169,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-linux-gnu)
       racc (~> 1.4)
+    openai (0.3.0)
     ostruct (0.6.1)
     parallel (1.27.0)
     parser (3.3.8.0)
@@ -322,6 +322,7 @@ DEPENDENCIES
   dotenv-rails
   kamal
   mysql2 (>= 0.5.3)
+  openai (~> 0.3.0)
   puma (>= 5.0)
   rack-cors
   rails (~> 8.0.2)
