@@ -5,7 +5,7 @@ class AIReplyDomain < ApplicationDomain
     @gpt_service = ChatGPTService.new
   end
 
-  def execute()
-    
+  def execute
+    Rails.logger.info "temp"
   end
 end
