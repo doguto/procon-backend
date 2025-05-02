@@ -13,6 +13,11 @@ class Api::V1::PostsController < ApplicationController
         end
     end
 
+    def show
+        post = Api::V1::Posts::Show.call(params[:id])
+        render json: post
+    end
+
     private
 
     def post_params
