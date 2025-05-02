@@ -15,7 +15,7 @@ class Api::V1::PostsController < ApplicationController
 
     def show
         post = Api::V1::Posts::Show.call(params[:id])
-        render json: post
+        render json: post.as_json(include: { user: { only: [:id, :name, :email] }  })
     end
 
     private
