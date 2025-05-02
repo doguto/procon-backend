@@ -1,4 +1,4 @@
-module Domains
+
     module Api
       module V1
         module Follows
@@ -18,5 +18,5 @@ module Domains
         end
       end
     end
-  end
+
   

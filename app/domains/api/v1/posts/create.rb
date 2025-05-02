@@ -1,4 +1,4 @@
-module Domains
+
     module Api
       module V1
         module Posts
@@ -17,5 +17,3 @@ module Domains
         end
       end
     end
-  end
-  

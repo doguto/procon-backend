@@ -1,11 +1,11 @@
 class Api::V1::PostsController < ApplicationController
     def index 
-        posts = Domains::Api::V1::Posts::Index.call
+        posts = Api::V1::Posts::Index.call
         render json: posts.as_json(include: { user: { only: [:id, :name, :email] }  })
     end
 
     def create
-        result = Domains::Api::V1::Posts::Create.call(post_params)
+        result = Api::V1::Posts::Create.call(post_params)
         if result.success?
             render json: result.post, status: :created
         else

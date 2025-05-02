@@ -1,13 +1,12 @@
-module Domains
+
     module Api
         module V1
-            module Follows
+            module Users
                 class Index
                     def self.call
-                        ::Follow.all
+                        ::User.all
                     end
                 end
             end
         end
     end
-end

@@ -1,4 +1,4 @@
-module Domains
+
     module Api
         module V1
             module Users
@@ -10,4 +10,3 @@ module Domains
             end
         end
     end
-end

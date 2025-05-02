@@ -1,11 +1,11 @@
 class Api::V1::FollowsController < ApplicationController
     def index
-        follows = Domains::Api::V1::Follows::Index.call
+        follows = Api::V1::Follows::Index.call
         render json: follows
     end
 
     def create
-        result = Domains::Api::V1::Follows::Create.call(params[:follower_id], params[:followed_id])
+        result = Api::V1::Follows::Create.call(params[:follower_id], params[:followed_id])
         if result.success?
           render json: result.follow, status: :created
         else
@@ -14,7 +14,7 @@ class Api::V1::FollowsController < ApplicationController
     end
 
     def destroy
-        result = Domains::Api::V1::Follows::Destroy.call(params[:follower_id], params[:followed_id])
+        result = Api::V1::Follows::Destroy.call(params[:follower_id], params[:followed_id])
         if result.success?
           head :no_content
         else
