@@ -1,15 +1,15 @@
 class Api::V1::PostsController < ApplicationController
     def index 
-        posts = Post.all
-        render json: posts
+        posts = Domains::Api::V1::Posts::Index.call
+        render json: posts.as_json(include: { user: { only: [:id, :name, :email] }  })
     end
 
     def create
-        post = Post.new(post_params)
-        if post.save
-            render json: post, status: :created
+        result = Domains::Api::V1::Posts::Create.call(post_params)
+        if result.success?
+            render json: result.post, status: :created
         else
-            render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
+            render json: { errors: result.errors }, status: :unprocessable_entity
         end
     end
 

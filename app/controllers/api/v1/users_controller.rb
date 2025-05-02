@@ -1,11 +1,11 @@
 class Api::V1::UsersController < ApplicationController
     def index
-        users = User.all
+        users = Domains::Api::V1::Users::Index.call
         render json: users
     end
 
     def show
-        user = User.find(params[:id])
+        user = Domains::APi::V1::Users::Show.call(params[:id])
         render json: user
     end
 end
