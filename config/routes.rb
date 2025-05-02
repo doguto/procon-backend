@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :posts, only: [:create, :index, :show] do
         collection do
-          get 'user/:user_id', action: :user_posts
+          get "user/:user_id", action: :user_posts
         end
       end
       resources :users, only: [:create, :show] do
