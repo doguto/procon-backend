@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_01_143007) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_02_055651) do
   create_table "follows", force: :cascade do |t|
     t.integer "follower_id", null: false
     t.integer "followed_id", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_143007) do
     t.string "name"
     t.string "email", null: false
     t.string "password"
+    t.string "image"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

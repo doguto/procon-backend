@@ -1,7 +1,7 @@
 class Api::V1::PostsController < ApplicationController
     def index 
         posts = Api::V1::Posts::Index.call
-        render json: posts.as_json(include: { user: { only: [:id, :name, :email] }  })
+        render json: posts.as_json(include: { user: { only: [:id, :name, :image] }  })
     end
 
     def create
@@ -15,7 +15,7 @@ class Api::V1::PostsController < ApplicationController
 
     def show
         post = Api::V1::Posts::Show.call(params[:id])
-        render json: post
+        render json: post.as_json(include: { user: { only: [:id, :name, :image] }  })
     end
 
     private

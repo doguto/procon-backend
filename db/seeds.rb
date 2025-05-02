@@ -1,38 +1,50 @@
-users = [
-  { name: "Alice", email: "alice@example.com", password: "password" },
-  { name: "Bob", email: "bob@example.com", password: "password" },
-  { name: "Charlie", email: "charlie@example.com", password: "password" },
-  { name: "Dave", email: "dave@example.com", password: "password" },
-  { name: "Eve", email: "eve@example.com", password: "password" }
-]
+require 'faker'
+require 'set'
 
-users.each do |user|
-  unless User.exists?(email: user[:email])
-    User.create!(user)
-  end
+NUM_USERS = 10
+NUM_POSTS = 30
+NUM_FOLLOWS = 30
+
+puts "Seeding users..."
+users = NUM_USERS.times.map do
+  User.create!(
+    name: Faker::Name.name,
+    email: Faker::Internet.unique.email,
+    password: "password",
+    image: Faker::Avatar.image # ここで画像を追加
+  )
 end
 
+puts "Seeding profiles..."
 users.each do |user|
-  u = User.find_by(email: user[:email])  
-  Profile.create!(user_id: u.id, bio: "Bio for #{u.name}") if u
+  user.create_profile!(
+    bio: Faker::Lorem.paragraph(sentence_count: 2)
+  )
 end
 
-users.each do |user|
-  current_user = User.find_by(email: user[:email])
-  next unless current_user
+puts "Seeding follow relationships..."
+follow_set = Set.new
 
-  User.where.not(id: current_user.id).each do |other_user|
-    current_user.following << other_user unless current_user.following.include?(other_user)
-  end
+while follow_set.size < NUM_FOLLOWS
+  follower = users.sample
+  followed = users.sample
+
+  next if follower == followed || follow_set.include?([follower.id, followed.id])
+
+  follower.following << followed
+  follow_set << [follower.id, followed.id]
 end
 
-users.each_with_index do |user, i|
-  u = User.find_by(email: user[:email]) 
-  Post.create!(
-    user: u,  
-    content: "サンプル投稿#{i + 1}",  
+puts "Seeding posts..."
+NUM_POSTS.times do
+  user = users.sample
+  user.posts.create!(
+    content: Faker::Lorem.sentence(word_count: rand(5..15)),
     status: "published",
-    created_at: Time.current,
+    created_at: Faker::Time.backward(days: 30),
     updated_at: Time.current
   )
 end
+
+puts "✅ Done!"
+
