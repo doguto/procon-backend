@@ -50,6 +50,8 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem "sqlite3", "~> 2.6"
+
+  gem 'faker'
 end
 
 group :production do

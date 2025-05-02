@@ -5,7 +5,5 @@ class AIReplyDomain < ApplicationDomain
     @gpt_service = ChatGPTService.new
   end
 
-  def execute()
-    
-  end
+  def execute; end
 end

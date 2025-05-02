@@ -1,5 +1,5 @@
 class Profile < ApplicationRecord
-    belongs_to :user
+  belongs_to :user
 
-    validates :bio, presence: true
+  validates :bio, presence: true
 end
