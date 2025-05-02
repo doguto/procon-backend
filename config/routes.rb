@@ -12,9 +12,14 @@ Rails.application.routes.draw do
           get 'user/:user_id', action: :user_posts
         end
       end
-      resources :users
-      resources :profiles
-      resources :follows, only: [:create, :destroy, :index]
+      resources :users, only: [:create, :show] do
+        member do
+          post :follow
+          delete :unfollow
+          get :followers
+          get :following
+        end
+      end
     end
   end
 
