@@ -1,26 +1,31 @@
 class Api::V1::PostsController < ApplicationController
     def index 
-        posts = Api::V1::Posts::Index.call
+        posts = TimelineDomain.new.execute
         render json: posts.as_json(include: { user: { only: [:id, :name, :image] }  })
     end
 
     def create
-        result = Api::V1::Posts::Create.call(post_params)
-        if result.success?
-            render json: result.post, status: :created
-        else
-            render json: { errors: result.errors }, status: :unprocessable_entity
-        end
+        result = UserPostDomain.new(user: current_user, params: post_params).execute
+        render json: post, status: :created
+    rescue => e
+        render json: { error: e.message }, status: :unprocessable_entity
     end
 
     def show
-        post = Api::V1::Posts::Show.call(params[:id])
-        render json: post.as_json(include: { user: { only: [:id, :name, :image] }  })
+        post = ShowPostDomain.new(id: params[:id]).execute
+        render json: post
+    rescue ActiveRecord::RecordNotFound
+        render json: { error: 'Post not fount' }, status: :not_found
+    end
+
+    def user_posts
+        posts = FetchUserPostsDomain.new(user: User.find(params[:user_id])).execute
+        render json: posts
     end
 
     private
 
     def post_params
-        params.require(:post).permit(:text, :user_id)
+        params.require(:post).permit(:content, :user_id)
     end
 end

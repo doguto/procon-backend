@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :posts
+      resources :posts, only: [:create, :index, :show] do
+        collection do
+          get 'user/:user_id', action: :user_posts
+        end
+      end
       resources :users
       resources :profiles
       resources :follows, only: [:create, :destroy, :index]
