@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema[8.0].define(version: 2025_05_03_024739) do
   create_table "ai_users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -28,7 +29,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_03_024739) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
