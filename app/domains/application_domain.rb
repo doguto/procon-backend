@@ -12,8 +12,4 @@ class ApplicationDomain
   def execute
     raise "implement this method in subclass"
   end
-
-  def create_dto
-    raise "implement this method in subclass"
-  end
 end
