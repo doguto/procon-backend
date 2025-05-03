@@ -1,7 +1,11 @@
 module Posts
   class ShowPostDomain
-    def execute(post_id:)
-      Post.find(post_id)
+    def initialize(id:)
+      @id = id
+    end
+
+    def execute
+      Post.find(@id)
     end
   end
 end
