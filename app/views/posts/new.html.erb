@@ -1,0 +1,23 @@
+<h1>新しい投稿</h1>
+
+<%= form_for @post do |f| %>
+  <% if @post.errors.any? %>
+    <div>
+      <h2>エラーがあります:</h2>
+      <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :text, "投稿内容" %><br>
+    <%= f.text_area :text %>
+  </div>
+
+  <div>
+    <%= f.submit "投稿を作成" %>
+  </div>
+<% end %>
