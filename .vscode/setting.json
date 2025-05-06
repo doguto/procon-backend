@@ -1,3 +1,4 @@
 {
-    "rubyLsp.useBundler": true
+    "rubyLsp.useBundler": true,
+    "files.eol": "\r\n"
 }
