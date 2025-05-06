@@ -1,9 +1,10 @@
-require 'faker'
-require 'set'
+require "faker"
 
 NUM_USERS = 10
 NUM_POSTS = 30
 NUM_FOLLOWS = 30
+NUM_LIKES = 30
+NUM_REPOSTS = 20
 
 puts "Seeding users..."
 users = NUM_USERS.times.map do
@@ -46,5 +47,25 @@ NUM_POSTS.times do
   )
 end
 
-puts "✅ Done!"
+puts "Seeding likes..."
+NUM_LIKES.times do
+  user = users.sample
+  post = Post.order("RANDOM()").first
 
+  next if follower == followed || follow_set.include?([follower.id, followed.id])
+
+  Like.create!(user: user, post: post)
+end
+
+puts "Seeding reposts..."
+NUM_REPOSTS.times do
+  user = users.sample
+  post = Post.order("RANDOM()").first
+
+  next if follower == followed || follow_set.include?([follower.id, followed.id])
+
+  Repost.create!(user: user, post: post)
+end
+
+
+puts "✅ Done!"
