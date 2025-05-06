@@ -29,4 +29,7 @@ class User < ApplicationRecord
            class_name: "Follow",
            dependent: :destroy,
            inverse_of: :followed
+
+  has_many :likes, dependent: :destroy
+  has_many :liked_posts, through: :likes, source: :post
 end
