@@ -29,4 +29,10 @@ class User < ApplicationRecord
            class_name: "Follow",
            dependent: :destroy,
            inverse_of: :followed
+
+  has_many :likes, dependent: :destroy
+  has_many :liked_posts, through: :likes, source: :post
+
+  has_many :reposts, dependent: :destroy
+  has_many :reposted_posts, through: :reposts, source: :post
 end
