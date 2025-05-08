@@ -5,7 +5,7 @@ module Posts
     end
 
     def execute
-      Post.where(user: @user).order(created_at: :desc)
+      Post.where(user: @user).order(created_at: :desc).map { |post| PostDto.new(post) }
     end
   end
 end

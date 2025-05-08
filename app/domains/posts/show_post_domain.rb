@@ -5,7 +5,8 @@ module Posts
     end
 
     def execute
-      Post.find(@id)
+      post = Post.includes(:user, :replies, :likes, :reposts).find(@id)
+      PostDetailDto.new(post)
     end
   end
 end
