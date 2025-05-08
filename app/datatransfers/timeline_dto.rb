@@ -10,7 +10,7 @@ class TimelineDto
   end
 
   def as_json
-    post_json = @post.as_json(include: { user: { only: [:id, :name, :image] }})
+    post_json = @post.as_json(include: { user: { only: [:id, :name, :image] } })
     post_json.merge(
       like_num: @like_num,
       repost_num: @repost_num,
