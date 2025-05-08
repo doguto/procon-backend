@@ -1,7 +1,7 @@
 require "faker"
 
 NUM_USERS = 10
-NUM_POSTS = 30
+NUM_POSTS = 50
 NUM_FOLLOWS = 30
 NUM_LIKES = 150
 NUM_REPOSTS = 120
@@ -37,31 +37,49 @@ while follow_set.size < NUM_FOLLOWS
 end
 
 puts "Seeding posts..."
+posts = []
+
 NUM_POSTS.times do
   user = users.sample
-  user.posts.create!(
-    content: Faker::Lorem.sentence(word_count: rand(5..15)),
-    status: "published",
-    created_at: Faker::Time.backward(days: 30),
-    updated_at: Time.current
-  )
+  if posts.any? && rand < 0.3
+    parent_post = posts.sample
+    post = user.posts.create!(
+      content: "Reply: " + Faker::Lorem.sentence(word_count: rand(5..15)),
+      status: "published",
+      reply_to_id: parent_post.id,
+      created_at: Faker::Time.backward(days: 30),
+      updated_at: Time.current
+    )
+  else
+    post = user.posts.create!(
+      content: Faker::Lorem.sentence(word_count: rand(5..15)),
+      status: "published",
+      created_at: Faker::Time.backward(days: 30),
+      updated_at: Time.current
+    )
+  end
+
+  posts << post
 end
 
 puts "Seeding likes..."
-NUM_LIKES.times do
-  user = User.order("RANDOM()").first
-  post = Post.order("RANDOM()").first
-
-  Like.create!(user: user, post: post)
+users.each do |user|
+  posts.sample(3).each do |post|
+    Like.find_or_create_by(user: user, post: post)
+  end
 end
 
 puts "Seeding reposts..."
-NUM_REPOSTS.times do
-  user = User.order("RANDOM()").first
-  post = Post.order("RANDOM()").first
+repost_set = Set.new
+
+while repost_set.size < NUM_REPOSTS
+  user = users.sample
+  post = posts.sample
+  
+  next if repost_set.include?([user.id, post.id]) || Repost.exists?(user: user, post: post)
 
   Repost.create!(user: user, post: post)
+  repost_set << [user.id, post.id]
 end
-
 
 puts "✅ Done!"
