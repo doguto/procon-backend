@@ -1,7 +1,7 @@
 class Api::V1::PostsController < ApplicationController
   def index
-    posts = Posts::TimelineDomain.new.execute
-    render json: posts.as_json(include: { user: { only: [:id, :name, :image] } })
+    dtos = Posts::TimelineDomain.new.execute
+    render json: dtos.as_json
   end
 
   def show
