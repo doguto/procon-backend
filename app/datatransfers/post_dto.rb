@@ -1,6 +1,7 @@
 class PostDto
-  def initialize(post)
+  def initialize(post, current_user = nil)
     @post = post
+    @current_user = current_user
   end
 
   def as_json
@@ -14,11 +15,20 @@ class PostDto
       user: {
         id: @post.user.id,
         name: @post.user.name,
-        image: @post.user.image
+        image: @post.user.image,
+        is_following: following_user?
       },
       replies_count: @post.replies.count,
       likes_count: @post.likes.count,
       reposts_count: @post.reposts.count
     }
+  end
+
+  private
+
+  def following_user?
+    return false unless @current_user
+
+    @current_user.following.exists?(id: @post.user.id)
   end
 end
