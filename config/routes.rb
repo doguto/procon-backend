@@ -7,11 +7,13 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :posts, only: [:create, :index, :show] do
+      resources :posts, only: [:index, :show, :create] do
+        resources :replies, only: [:create], module: :posts
         collection do
-          get "user/:user_id", action: :user_posts
+          get "users/:user_id", action: :user_posts
         end
       end
+
       resources :users, only: [:create, :show] do
         member do
           post :follow
@@ -22,7 +24,4 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end

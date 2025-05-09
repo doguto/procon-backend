@@ -6,21 +6,24 @@ class Api::V1::PostsController < ApplicationController
 
   def show
     post = Posts::ShowPostDomain.new(id: params[:id]).execute
-    render json: post.as_json(include: { user: { only: [:id, :name, :image] } })
+    render json: post
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Post not fount" }, status: :not_found
   end
 
   def create
-    Posts::UserPostDomain.new(user: current_user, params: post_params).execute
+    post = Posts::UserPostDomain.new(user_id: params[:post][:user_id]).execute(content: params[:post][:content])
     render json: post, status: :created
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "User not found" }, status: :not_found
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
+  
 
   def user_posts
-    posts = Posts::FetchUserPostsDomain.new(user: User.find(params[:user_id])).execute
-    render json: posts.as_json(include: { user: { only: [:id, :name, :image] } })
+    posts = Posts::FetchUserPostsDomain.new(user_id: params[:user_id]).execute
+    render json: posts
   end
 
   private
