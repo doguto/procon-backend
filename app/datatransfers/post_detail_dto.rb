@@ -1,6 +1,7 @@
 class PostDetailDto
-  def initialize(post)
+  def initialize(post, current_user = nil)
     @post = post
+    @current_user = current_user
   end
 
   def as_json
@@ -21,5 +22,13 @@ class PostDetailDto
       reposts_count: @post.reposts.count,
       replies: @post.replies.order(created_at: :asc).map { |post| PostDetailDto.new(post).as_json }
     }
+  end
+
+  private
+
+  def following_user?
+    return false unless @current_user
+
+    @current_user.following.exists?(id: @post.user.id)
   end
 end
