@@ -2,7 +2,7 @@ module Posts
   class TimelineDomain
     def execute
       # 仮に現在のUserをid=1としている
-      current_user = User.find(1)
+      User.find(1)
 
       posts = Post.order(created_at: :desc).limit(50)
       dtos = []
