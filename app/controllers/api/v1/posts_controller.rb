@@ -12,8 +12,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
-    user = User.find(params[:post][:user_id])
-    post = Posts::UserPostDomain.new(user: user).execute(content: params[:post][:content])
+    post = Posts::UserPostDomain.new(user_id: params[:post][:user_id]).execute(content: params[:post][:content])
     render json: post, status: :created
   rescue ActiveRecord::RecordNotFound
     render json: { error: "User not found" }, status: :not_found

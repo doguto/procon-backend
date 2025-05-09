@@ -1,7 +1,6 @@
 class Api::V1::Posts::RepliesController < ApplicationController
   def create
-    user = User.find(params[:user_id])
-    post = Posts::ReplyPostDomain.new(user: user).execute(
+    post = Posts::ReplyPostDomain.new(user_id: params[:user_id]).execute(
       content: params[:content],
       reply_to_id: params[:post_id]
     )

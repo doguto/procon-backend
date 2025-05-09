@@ -1,11 +1,12 @@
 module Posts
   class UserPostDomain
-    def initialize(user:)
-      @user = user
+    def initialize(user_id:)
+      @user_id = user_id
     end
 
     def execute(content:)
-      post = Post.new(user: @user, content: content)
+      user = User.find(@user_id)
+      post = Post.new(user: user, content: content)
       if post.save
         post
       else
