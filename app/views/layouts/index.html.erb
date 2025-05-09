@@ -1,0 +1,16 @@
+<h1>Hello</h1>
+
+# <%= link_to "新しい投稿", new_post_path %>
+
+# <% if @posts.empty? %>
+#   <p>Postまだ投稿がありません。</p>
+# <% else %>
+#   <ul>
+#     <% @posts.each do |post| %>
+#       <li>
+#         <strong><%= post.created_at.strftime("%Y/%m/%d %H:%M") %>:</strong>
+#         <%= post.text %>
+#       </li>
+#     <% end %>
+#   </ul>
+# <% end %>
