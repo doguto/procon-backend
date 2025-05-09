@@ -64,7 +64,8 @@ end
 
 puts "Seeding likes..."
 users.each do |user|
-  posts.sample(3).each do |post|
+  3.times do
+    post = Post.order("RANDOM()").first
     Like.find_or_create_by(user: user, post: post)
   end
 end
@@ -73,8 +74,8 @@ puts "Seeding reposts..."
 repost_set = Set.new
 
 while repost_set.size < NUM_REPOSTS
-  user = users.sample
-  post = posts.sample
+  user = User.order("RANDOM()").first
+  post = Post.order("RANDOM()").first
   
   next if repost_set.include?([user.id, post.id]) || Repost.exists?(user: user, post: post)
 
