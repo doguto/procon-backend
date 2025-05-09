@@ -22,7 +22,7 @@ class Api::V1::PostsController < ApplicationController
   
 
   def user_posts
-    posts = Posts::FetchUserPostsDomain.new(user: User.find(params[:user_id])).execute
+    posts = Posts::FetchUserPostsDomain.new(user_id: params[:user_id]).execute
     render json: posts
   end
 
