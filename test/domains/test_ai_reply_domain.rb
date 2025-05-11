@@ -2,8 +2,8 @@ require_relative "test_domain"
 
 class TestAIReplyDomain < TestDomain
   def initialize
+    
     super
-
     @gpt_service = ChatGPTService.new
   end
 
