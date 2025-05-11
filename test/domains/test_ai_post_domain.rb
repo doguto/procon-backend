@@ -1,4 +1,3 @@
-require_relative "../../config/environment.rb" 
 require_relative "test_domain"
 
 class TestAIPostDomain < TestDomain
@@ -8,9 +7,17 @@ class TestAIPostDomain < TestDomain
   end
 
   def test_ai_post(post_text:)
-    reply_text = @gpt_service.chat(user_prompt: post_text)
-    Rails.logger.info "生成されたAIポスト: #{reply_text}"
-    @answer = reply_text
+    begin
+      reply_text = @gpt_service.chat(user_prompt: post_text)
+      if reply_text
+        Rails.logger.info "生成されたAIポスト: #{reply_text}"
+        @answer = reply_text
+      else
+        Rails.logger.warn "AIポストの生成ができませんでした。"
+      end
+    rescue => e
+      Rails.logger.error "AIポスト生成中にエラーが発生: #{e.message}"
+    end
   end
 end
 
