@@ -1,4 +1,4 @@
-class Api::V1::Posts::RepliesController < ApplicationController
+class Posts::RepliesController < ApplicationController
   def create
     post = Posts::ReplyPostDomain.new(user_id: params[:user_id]).execute(
       content: params[:content],
