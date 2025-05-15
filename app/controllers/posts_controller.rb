@@ -1,4 +1,4 @@
-class Api::V1::PostsController < ApplicationController
+class PostsController < ApplicationController
   def index
     dtos = Posts::TimelineDomain.new.execute
     render json: dtos.as_json

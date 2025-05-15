@@ -1,4 +1,4 @@
-class Api::V1::UsersController < ApplicationController
+class UsersController < ApplicationController
   def show
     user = Users::ShowUserWithProfileDomain.new(user_id: params[:id]).execute
     render json: user.as_json(include: :profile)
