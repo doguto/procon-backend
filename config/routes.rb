@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       end
     end
 
-    post "auth/login", to: "auth#login"
+    post "auth/signin", to: "auth#signin"
     post "auth/signup", to: "auth#signup"
 
     get "auth/me", to: "auth#me"

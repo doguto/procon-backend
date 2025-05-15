@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-  def login
+  def signin
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       token = JsonWebToken.encode(user_id: user.id)

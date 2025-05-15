@@ -19,7 +19,6 @@ class PostsController < ApplicationController
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
-  
 
   def user_posts
     posts = Posts::FetchUserPostsDomain.new(user_id: params[:user_id]).execute
