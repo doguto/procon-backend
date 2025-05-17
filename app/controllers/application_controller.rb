@@ -1,12 +1,11 @@
-class ApplicationController < ActionController::Base
-  protect_from_forgery with: :null_session # CSRFエラーを防ぐ（API対応）
-
+class ApplicationController < ActionController::API
   before_action :set_current_user
 
   private
 
   def set_current_user
-    token = cookies.signed[:jwt]
+    header = request.headers['Authorization']
+    token = header.split.last if header
     if token
       decoded = JsonWebToken.decode(token)
       @current_user = User.find_by(id: decoded[:user_id]) if decoded
