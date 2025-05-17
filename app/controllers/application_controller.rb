@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
       decoded = JsonWebToken.decode(token)
       @current_user = User.find_by(id: decoded[:user_id]) if decoded
     end
-  rescue JWT::DecodeError
+  rescue JWT::DecodeError => e
+    Rails.logger.warn("JWT::DecodeError occurred: #{e.message}")
     @current_user = nil
   end
 
