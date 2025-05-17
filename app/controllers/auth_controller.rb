@@ -58,7 +58,7 @@ class AuthController < ApplicationController
   private
 
   def signup_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :image)
+    params.expect(user: [:name, :email, :password, :password_confirmation, :image])
   end
 
   def write_jwt_cookie(user)

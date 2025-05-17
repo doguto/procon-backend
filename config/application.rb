@@ -18,7 +18,6 @@ module ProconBackend
     config.autoload_paths += %W[#{config.root}/app/domains]
     config.paths.add Rails.root.join("app/domains").to_s, eager_load: true
 
-
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
