@@ -35,4 +35,6 @@ class User < ApplicationRecord
 
   has_many :reposts, dependent: :destroy
   has_many :reposted_posts, through: :reposts, source: :post
+
+  has_secure_password
 end

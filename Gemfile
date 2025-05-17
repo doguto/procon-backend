@@ -51,7 +51,9 @@ group :development, :test do
 
   gem "sqlite3", "~> 2.6"
 
-  gem 'faker'
+  gem "faker"
+
+  gem "bcrypt", "~> 3.1.7"
 end
 
 group :production do
@@ -59,3 +61,5 @@ group :production do
 end
 
 gem "openai", "~> 0.3.0"
+
+gem "jwt", "~> 2.10"

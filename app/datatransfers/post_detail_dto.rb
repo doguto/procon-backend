@@ -20,7 +20,7 @@ class PostDetailDto
       replies_count: @post.replies.count,
       likes_count: @post.likes.count,
       reposts_count: @post.reposts.count,
-      replies: @post.replies.order(created_at: :asc).map { |post| PostDetailDto.new(post).as_json }
+      replies: @post.replies.order(created_at: :asc).map { |post| PostDetailDto.new(post, @current_user).as_json }
     }
   end
 
