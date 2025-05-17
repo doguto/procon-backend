@@ -38,7 +38,7 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
 Layout/EndOfLine:
-  EnforcedStyle: crlf
+  EnforcedStyle: lf
 
 
 # 日本語にコメントを許可
@@ -82,10 +82,6 @@ Style/WordArray:
 Naming/VariableNumber:
   Enabled: false
 
-# メソッド名等の命名の指摘
-Naming/PredicateName:
-  Enabled: false
-
 # 命名に英語以外を禁止
 Naming/AsciiIdentifiers:
   Enabled: true
@@ -111,10 +107,6 @@ Naming/ConstantName:
 # ファイル名はsnake_caseに
 Naming/FileName:
   Enabled: true
-
-Naming/PredicateName:
-  Enabled: true
-  ForbiddenPrefixes: []
 
 
 Lint/UselessAssignment:
