@@ -12,7 +12,7 @@ class AuthController < ApplicationController
 
   def signin
     token, user = Auth::SigninDomain.new(params[:email], params[:password]).execute
-    response.headers["Authorization"] = "Bearer #{result[:token]}"
+    response.headers["Authorization"] = "Bearer #{token}"
     render json: {
       token: token,
       user: user.slice(:id, :name, :email, :image)
@@ -23,7 +23,7 @@ class AuthController < ApplicationController
 
   def signup
     token, user = Auth::SignupDomain.new(signup_params).execute
-    response.headers["Authorization"] = "Bearer #{result[:token]}"
+    response.headers["Authorization"] = "Bearer #{token}"
     render json: {
       token: token,
       user: user.slice(:id, :name, :email, :image)
