@@ -36,5 +36,13 @@ class User < ApplicationRecord
   has_many :reposts, dependent: :destroy
   has_many :reposted_posts, through: :reposts, source: :post
 
-  has_secure_password
+  has_secure_password validations: false
+
+  validates :password, presence: true, if: :password_required?
+
+  private
+
+  def password_required?
+    provider.blank? || provider == "email"
+  end
 end

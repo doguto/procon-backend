@@ -63,3 +63,5 @@ end
 gem "openai", "~> 0.3.0"
 
 gem "jwt", "~> 2.10"
+
+gem 'google-id-token'
