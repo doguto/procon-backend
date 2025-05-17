@@ -4,15 +4,9 @@ class ApplicationController < ActionController::API
   private
 
   def set_current_user
-    header = request.headers['Authorization']
+    header = request.headers["Authorization"]
     token = header.split.last if header
-    if token
-      decoded = JsonWebToken.decode(token)
-      @current_user = User.find_by(id: decoded[:user_id]) if decoded
-    end
-  rescue JWT::DecodeError => e
-    Rails.logger.warn("JWT::DecodeError occurred: #{e.message}")
-    @current_user = nil
+    @current_user = Auth::SetCurrentUserDomain.new(token).execute
   end
 
   attr_reader :current_user

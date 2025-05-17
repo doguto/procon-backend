@@ -1,27 +1,33 @@
 class AuthController < ApplicationController
   def google
-    result = Auth::GoogleAuthDomain.new(params[:credential]).execute
-    token = JwtTokenService.encode(User.find_by(email: result[:user][:email]))
-    response.headers['Authorization'] = "Bearer #{token}"
-    render json: result
+    token, user = Auth::GoogleAuthDomain.new(params[:credential]).execute
+    response.headers["Authorization"] = "Bearer #{token}"
+    render json: {
+      token: token,
+      user: user.slice(:id, :name, :email, :image)
+    }
   rescue StandardError => e
     render json: { error: e.message }, status: :unauthorized
   end
 
   def signin
-    result = Auth::SigninDomain.new(params[:email], params[:password]).execute
-    token = JwtTokenService.encode(User.find_by(email: params[:email]))
-    response.headers['Authorization'] = "Bearer #{token}"
-    render json: result
+    token, user = Auth::SigninDomain.new(params[:email], params[:password]).execute
+    response.headers["Authorization"] = "Bearer #{result[:token]}"
+    render json: {
+      token: token,
+      user: user.slice(:id, :name, :email, :image)
+    }
   rescue StandardError => e
     render json: { error: e.message }, status: :unauthorized
   end
 
   def signup
-    result = Auth::SignupDomain.new(signup_params).execute
-    token = JwtTokenService.encode(User.find_by(email: signup_params[:email]))
-    response.headers['Authorization'] = "Bearer #{token}"
-    render json: result, status: :created
+    token, user = Auth::SignupDomain.new(signup_params).execute
+    response.headers["Authorization"] = "Bearer #{result[:token]}"
+    render json: {
+      token: token,
+      user: user.slice(:id, :name, :email, :image)
+    }
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end

@@ -16,7 +16,7 @@ class Auth::GoogleAuthDomain
     end
 
     token = JsonWebToken.encode(user_id: user.id)
-    { token: token, user: user.slice(:id, :name, :email, :image) }
+    [token, user]
   rescue GoogleIDToken::ValidationError
     raise "Invalid Google token"
   end
