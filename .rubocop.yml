@@ -1,6 +1,6 @@
 inherit_from: .rubocop_todo.yml
 
-require:
+plugins:
   - rubocop-performance
   - rubocop-rails
 
@@ -28,6 +28,7 @@ AllCops:
 Metrics:
   Enabled: false
 
+
 # 一行あたりの文字数
 Layout/LineLength:
   Enabled: false
@@ -36,8 +37,9 @@ Layout/LineLength:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
-LayOut/EndOfLine:
+Layout/EndOfLine:
   EnforcedStyle: crlf
+
 
 # 日本語にコメントを許可
 Style/AsciiComments:
@@ -63,13 +65,7 @@ Style/GuardClause:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-Style/SpecialGlobalVars:
-  AllowedVariables: ['$0']
-
-Lint/UselessAssignment:
-  Enabled: true
-
-Lint/UnusedMethodArgument:
+Style/AndOr:
   Enabled: true
 
 # シンボルによる配列の%記法のチェック
@@ -81,17 +77,56 @@ Style/SymbolArray:
 Style/WordArray:
   Enabled: false
 
+
 # 変数名に数字を許可
 Naming/VariableNumber:
-  Enabled: false
-
-# = と == の指摘
-Lint/AssignmentInCondition:
   Enabled: false
 
 # メソッド名等の命名の指摘
 Naming/PredicateName:
   Enabled: false
+
+# 命名に英語以外を禁止
+Naming/AsciiIdentifiers:
+  Enabled: true
+
+# クラスとモジュールの命名をキャメルケースに
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+
+Naming/MethodName:
+  Enabled: true
+  # メソッド名はsnake_caseに
+  EnforcedStyle: snake_case
+
+Naming/VariableName:
+  Enabled: true
+  # 変数名はsnake_caseに
+  EnforcedStyle: snake_case
+
+# 定数はSCREAMING_SNAKE_CASEに
+Naming/ConstantName:
+  Enabled: true
+
+# ファイル名はsnake_caseに
+Naming/FileName:
+  Enabled: true
+
+Naming/PredicateName:
+  Enabled: true
+  ForbiddenPrefixes: []
+
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Lint/UnusedMethodArgument:
+  Enabled: true
+
+# = と == の指摘
+Lint/AssignmentInCondition:
+  Enabled: false
+
 
 # 未i18nのチェック（バリデーションエラーメッセージをi18nに登録するのはやや冗長？なためfalse）
 Rails/I18nLocaleTexts:
