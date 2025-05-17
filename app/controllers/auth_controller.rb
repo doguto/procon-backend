@@ -1,9 +1,7 @@
-require "google-id-token"
-
 class AuthController < ApplicationController
   def google
     result = Auth::GoogleAuthDomain.new(params[:credential]).execute
-    token = write_jwt_token(User.find_by(email: result[:user][:email]))
+    token = JwtTokenService.encode(User.find_by(email: result[:user][:email]))
     response.headers['Authorization'] = "Bearer #{token}"
     render json: result
   rescue StandardError => e
@@ -12,7 +10,7 @@ class AuthController < ApplicationController
 
   def signin
     result = Auth::SigninDomain.new(params[:email], params[:password]).execute
-    token = write_jwt_token(User.find_by(email: params[:email]))
+    token = JwtTokenService.encode(User.find_by(email: params[:email]))
     response.headers['Authorization'] = "Bearer #{token}"
     render json: result
   rescue StandardError => e
@@ -21,7 +19,7 @@ class AuthController < ApplicationController
 
   def signup
     result = Auth::SignupDomain.new(signup_params).execute
-    token = write_jwt_token(User.find_by(email: signup_params[:email]))
+    token = JwtTokenService.encode(User.find_by(email: signup_params[:email]))
     response.headers['Authorization'] = "Bearer #{token}"
     render json: result, status: :created
   rescue StandardError => e
@@ -48,9 +46,5 @@ class AuthController < ApplicationController
 
   def signup_params
     params.expect(user: [:name, :email, :password, :password_confirmation, :image])
-  end
-
-  def write_jwt_token(user)
-    JsonWebToken.encode(user_id: user.id)
   end
 end
