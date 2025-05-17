@@ -20,7 +20,7 @@ class AuthController < ApplicationController
   end
 
   def authenticate_user
-    token = request.headers["Authorization"]&.split(" ")&.last
+    token = request.headers["Authorization"]&.split&.last
     decoded_token = JsonWebToken.decode(token)
     @current_user = User.find_by(id: decoded_token[:user_id])
     render json: { error: "Unauthorized" }, status: :unauthorized if @current_user.nil?
@@ -34,6 +34,6 @@ class AuthController < ApplicationController
   private
 
   def signup_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :image)
+    params.expect(user: [:name, :email, :password, :password_confirmation, :image])
   end
 end
