@@ -115,6 +115,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-id-token (1.4.2)
+      jwt (>= 1)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     io-console (0.8.0)
@@ -335,6 +337,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   faker
+  google-id-token
   jwt (~> 2.10)
   kamal
   mysql2 (>= 0.5.3)
