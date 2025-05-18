@@ -1,7 +1,4 @@
 require "logger"
-Dir.glob(File.join(__dir__, "../services/", "*.rb")).each do |file|
-  require file
-end
 
 class ApplicationDomain
   def initialize

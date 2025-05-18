@@ -72,11 +72,14 @@ end
 
 puts "Seeding reposts..."
 repost_set = Set.new
+max_attempts = NUM_REPOSTS * 10 
+attempts = 0
 
-while repost_set.size < NUM_REPOSTS
+while repost_set.size < NUM_REPOSTS && attempts < max_attempts
   user = User.order("RANDOM()").first
   post = Post.order("RANDOM()").first
-  
+  attempts += 1
+
   next if repost_set.include?([user.id, post.id]) || Repost.exists?(user: user, post: post)
 
   Repost.create!(user: user, post: post)

@@ -1,34 +1,51 @@
 class AuthController < ApplicationController
+  def google
+    token, user = Auth::GoogleAuthDomain.new(params[:credential]).execute
+    response.headers["Authorization"] = "Bearer #{token}"
+    render json: {
+      token: token,
+      user: user.slice(:id, :name, :email, :image)
+    }
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unauthorized
+  end
+
   def signin
-    user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
-      token = JsonWebToken.encode(user_id: user.id)
-      render json: { token:, user: user.slice(:id, :name, :email, :image) }
-    else
-      render json: { error: "Invalid email or password" }, status: :unauthorized
-    end
+    token, user = Auth::SigninDomain.new(params[:email], params[:password]).execute
+    response.headers["Authorization"] = "Bearer #{token}"
+    render json: {
+      token: token,
+      user: user.slice(:id, :name, :email, :image)
+    }
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unauthorized
   end
 
   def signup
-    user = User.new(signup_params)
-    if user.save
-      token = JsonWebToken.encode(user_id: user.id)
-      render json: { token:, user: user.slice(:id, :name, :email, :image) }, status: :created
-    else
-      render json: { error: user.errors.full_messages }, status: :unprocessable_entity
-    end
+    token, user = Auth::SignupDomain.new(signup_params).execute
+    response.headers["Authorization"] = "Bearer #{token}"
+    render json: {
+      token: token,
+      user: user.slice(:id, :name, :email, :image)
+    }
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def authenticate_user
     token = request.headers["Authorization"]&.split&.last
-    decoded_token = JsonWebToken.decode(token)
-    @current_user = User.find_by(id: decoded_token[:user_id])
-    render json: { error: "Unauthorized" }, status: :unauthorized if @current_user.nil?
+    @current_user = Auth::AuthenticateUserDomain.new(token).execute
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unauthorized
   end
 
   def me
     authenticate_user
     render json: @current_user.slice(:id, :name, :email, :image)
+  end
+
+  def logout
+    head :no_content
   end
 
   private
