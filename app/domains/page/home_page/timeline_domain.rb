@@ -1,5 +1,5 @@
-module Posts
-  class TimelineDomain
+module Page::HomePage
+  class TimelineDomain < ApplicationDomain
     def execute
       # 仮に現在のUserをid=1としている
       User.find(1)

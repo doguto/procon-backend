@@ -1,6 +1,7 @@
-module Follows
-  class UnfollowUserDomain
+module Common::Users
+  class UnfollowUserDomain < ApplicationDomain
     def initialize(follower_id:, followed_id:)
+      super
       @follower_id = follower_id
       @followed_id = followed_id
     end

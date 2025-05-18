@@ -1,6 +1,6 @@
 class AuthController < ApplicationController
   def google
-    token, user = Auth::GoogleAuthDomain.new(params[:credential]).execute
+    token, user = Page::AuthPage::AuthenticateGoogleDomain.new(params[:credential]).execute
     response.headers["Authorization"] = "Bearer #{token}"
     render json: {
       token: token,
@@ -11,7 +11,7 @@ class AuthController < ApplicationController
   end
 
   def signin
-    token, user = Auth::SigninDomain.new(params[:email], params[:password]).execute
+    token, user = Page::AuthPage::SigninDomain.new(params[:email], params[:password]).execute
     response.headers["Authorization"] = "Bearer #{token}"
     render json: {
       token: token,
@@ -22,7 +22,7 @@ class AuthController < ApplicationController
   end
 
   def signup
-    token, user = Auth::SignupDomain.new(signup_params).execute
+    token, user = Page::AuthPage::SignupDomain.new(signup_params).execute
     response.headers["Authorization"] = "Bearer #{token}"
     render json: {
       token: token,
@@ -34,7 +34,7 @@ class AuthController < ApplicationController
 
   def authenticate_user
     token = request.headers["Authorization"]&.split&.last
-    @current_user = Auth::AuthenticateUserDomain.new(token).execute
+    @current_user = Page::AuthPage::AuthenticateUserDomain.new(token).execute
   rescue StandardError => e
     render json: { error: e.message }, status: :unauthorized
   end

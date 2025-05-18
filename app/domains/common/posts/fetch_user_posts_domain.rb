@@ -1,6 +1,7 @@
-module Posts
-  class FetchUserPostsDomain
+module Common::Posts
+  class FetchUserPostsDomain < ApplicationDomain
     def initialize(user_id:)
+      super
       @user_id = user_id
     end
 

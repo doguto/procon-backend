@@ -1,6 +1,7 @@
-module Follows
-  class ListUserFollowDomain
+module Page::ProfilePage
+  class ListUserFollowDomain < ApplicationDomain
     def initialize(user_id:)
+      super
       @user_id = user_id
     end
 

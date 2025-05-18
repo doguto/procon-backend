@@ -1,18 +1,18 @@
 class PostsController < ApplicationController
   def index
-    dtos = Posts::TimelineDomain.new.execute
+    dtos = Page::HomePage::TimelineDomain.new.execute
     render json: dtos.as_json
   end
 
   def show
-    post = Posts::ShowPostDomain.new(id: params[:id]).execute
+    post = Common::Posts::ShowPostDomain.new(id: params[:id]).execute
     render json: post
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Post not fount" }, status: :not_found
   end
 
   def create
-    post = Posts::UserPostDomain.new(user_id: params[:post][:user_id]).execute(content: params[:post][:content])
+    post = Common::Posts::UserPostDomain.new(user_id: params[:post][:user_id]).execute(content: params[:post][:content])
     render json: post, status: :created
   rescue ActiveRecord::RecordNotFound
     render json: { error: "User not found" }, status: :not_found
@@ -21,7 +21,7 @@ class PostsController < ApplicationController
   end
 
   def user_posts
-    posts = Posts::FetchUserPostsDomain.new(user_id: params[:user_id]).execute
+    posts = Common::Posts::FetchUserPostsDomain.new(user_id: params[:user_id]).execute
     render json: posts
   end
 
