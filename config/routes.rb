@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:index, :show, :create] do
       resources :replies, only: [:create], module: :posts
       resources :likes, only: [:create], module: :posts
+      resources :reposts, only: [:create], module: :posts
       collection do
         get "users/:user_id", action: :user_posts
       end
