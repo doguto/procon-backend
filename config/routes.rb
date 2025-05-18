@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
     post "auth/signin", to: "auth#signin"
     post "auth/signup", to: "auth#signup"
+    post "auth/google", to: "auth#google"
 
     get "auth/me", to: "auth#me"
   end

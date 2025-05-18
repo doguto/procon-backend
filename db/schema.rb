@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 20_250_515_130_147) do
+ActiveRecord::Schema[8.0].define(version: 20_250_517_032_547) do
   create_table "ai_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -69,6 +69,8 @@ ActiveRecord::Schema[8.0].define(version: 20_250_515_130_147) do
     t.string "password"
     t.string "image"
     t.string "password_digest"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
