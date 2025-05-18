@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   def show
-    user = Users::ShowUserWithProfileDomain.new(user_id: params[:id]).execute
+    user = Page::ProfilePage::ShowUserWithProfileDomain.new(user_id: params[:id]).execute
     render json: user.as_json(include: :profile)
   end
 
   def create
-    result = Users::CreateUserDomain.new(params: user_params).execute
-    if result.succcess?
+    result = Common::Users::CreateUserDomain.new(params: user_params).execute
+    if result.success?
       render json: result.user, status: :created
     else
       render json: { errors: result.errors }, status: :unprocessable_entity
@@ -14,22 +14,22 @@ class UsersController < ApplicationController
   end
 
   def follow
-    Follows::FollowUserDomain.new(follower_id: current_user.id, followed_id: params[:id]).execute
+    Common::Users::FollowUserDomain.new(follower_id: current_user.id, followed_id: params[:id]).execute
     head :no_content
   end
 
   def unfollow
-    Follows::UnfollowUserDomain.new(follower_id: current_user.id, followed_id: params[:id]).execute
+    Common::Users::UnfollowUserDomain.new(follower_id: current_user.id, followed_id: params[:id]).execute
     head :no_content
   end
 
   def followers
-    users = Follows::ListUserFollowDomain.new(user_id: params[:id]).followers
+    users = Page::ProfilePage::ListUserFollowDomain.new(user_id: params[:id]).followers
     render json: users
   end
 
   def following
-    users = Follows::ListUserFollowDomain.new(user_id: params[:id]).following
+    users = Page::ProfilePage::ListUserFollowDomain.new(user_id: params[:id]).following
     render json: users
   end
 

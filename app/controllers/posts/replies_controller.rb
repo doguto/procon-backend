@@ -1,6 +1,6 @@
 class Posts::RepliesController < ApplicationController
   def create
-    post = Posts::ReplyPostDomain.new(user_id: params[:user_id]).execute(
+    post = Common::Posts::ReplyPostDomain.new(user_id: params[:user_id]).execute(
       content: params[:content],
       reply_to_id: params[:post_id]
     )
