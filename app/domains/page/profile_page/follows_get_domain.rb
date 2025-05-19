@@ -6,7 +6,8 @@ module Page::ProfilePage
     end
 
     def execute
-      User.joins(:inverse_follows).where(follows: { follower_id: @user_id })
+      user = User.find(@user_id)
+      user.followee_relationships.map(&:followed)
     end
   end
 end
