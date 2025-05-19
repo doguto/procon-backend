@@ -14,4 +14,12 @@ class ApplicationController < ActionController::API
   def authenticate_user!
     render json: { error: "Not Authorized" }, status: :unauthorized unless current_user
   end
+
+  def camelize_hash(hash)
+    hash.transform_keys { |key| key.to_s.camelize(:lower) }
+  end
+
+  def camelize_json(json)
+    json.transform_keys { |key| key.to_s.camelize(:lower) }
+  end
 end
