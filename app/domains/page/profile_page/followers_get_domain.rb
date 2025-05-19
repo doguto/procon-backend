@@ -7,7 +7,7 @@ module Page::ProfilePage
 
     def execute
       user = User.find(@user_id)
-      user.follower_relationships.map(&:follower)
+      user.follower_relationships.map(&:follower).map { |follower| User.find(follower.id) }
     end
   end
 end
