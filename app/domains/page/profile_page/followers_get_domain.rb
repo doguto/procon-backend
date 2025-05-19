@@ -1,16 +1,12 @@
 module Page::ProfilePage
-  class ListUserFollowDomain < ApplicationDomain
+  class FollowersGetDomain < ApplicationDomain
     def initialize(user_id:)
       super
       @user_id = user_id
     end
 
-    def followers
+    def execute
       User.joins(:follows).where(follows: { followed_id: @user_id })
-    end
-
-    def following
-      User.joins(:inverse_follows).where(follows: { follower_id: @user_id })
     end
   end
 end
