@@ -7,10 +7,28 @@
 #
 # To enable this hook, rename this file to "pre-commit".
 
+echo "Running Pre-Commit Tasks..."
+
+echo "  Running ilegal commit check..."
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+UNCOMMITABLE_BRANCHES="main"
+if [ "$BRANCH_NAME" = $UNCOMMITABLE_BRANCHES ]; then
+    echo "Not Allowed to commit in main"
+    exit 1
+fi
+echo "  ...Completed ilegal commit check"
+echo ""
+
+echo "  Running Rubocop..."
 bundle exec rubocop --safe
 RUBOCOP_STATUS=$?
 
-if [$RUBOCOP_STATUS -ne 0]; then
+if [ $RUBOCOP_STATUS -ne 0 ]; then
     echo "Lint Failed. Please repair your diff."
     exit 1
 fi
+echo "  ...Completed Rubocop"
+echo ""
+
+echo "...Completed Pre-Commit Tasks"
+echo ""
