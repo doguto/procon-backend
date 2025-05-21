@@ -1,13 +1,11 @@
 module Page::HomePage
   class TimelineDomain < ApplicationDomain
-    def execute
-      # 仮に現在のUserをid=1としている
-      User.find(1)
-
+    def execute(id:)
       posts = Post.order(created_at: :desc).limit(50)
+      user = User.find(id)
       dtos = []
       posts.each do |post|
-        dto = PostDto.new(post)
+        dto = PostDto.new(post, user)
         dtos.push(dto)
       end
 

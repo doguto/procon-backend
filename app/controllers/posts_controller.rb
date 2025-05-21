@@ -1,19 +1,19 @@
 class PostsController < ApplicationController
   def index
-    dtos = Page::HomePage::TimelineDomain.new.execute(set_current_user.id)
-    render json: dtos.map { |dto| dto.get.to_camelized_json }.as_json
+    dtos = Page::HomePage::TimelineDomain.new.execute(id: set_current_user.id)
+    render json: dtos.map(&:get).as_json
   end
 
   def show
     post = Common::Posts::ShowPostDomain.new(id: params[:id]).execute
-    render json: post.get.to_camelized_json
+    render json: post.get.as_json
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Post not found" }, status: :not_found
   end
 
   def create
     post = Common::Posts::UserPostDomain.new(user_id: params[:post][:user_id]).execute(content: params[:post][:content])
-    render json: post.get.to_camelized_json, status: :created
+    render json: post.as_json.camelize, status: :created
   rescue ActiveRecord::RecordNotFound
     render json: { error: "User not found" }, status: :not_found
   rescue StandardError => e
