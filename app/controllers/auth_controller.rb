@@ -41,7 +41,7 @@ class AuthController < ApplicationController
 
   def me
     authenticate_user
-    render json: @current_user.slice(:id, :name, :email, :image)
+    render json: @current_user.slice(:id, :name, :email, :image).camelize
   end
 
   def logout

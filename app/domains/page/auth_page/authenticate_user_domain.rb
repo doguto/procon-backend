@@ -1,7 +1,7 @@
 module Page::AuthPage
   class AuthenticateUserDomain < ApplicationDomain
     def initialize(token)
-      super
+      super()
       @token = token
     end
 

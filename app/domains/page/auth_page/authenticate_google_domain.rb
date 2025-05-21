@@ -3,7 +3,7 @@ require "google-id-token"
 module Page::AuthPage
   class AuthenticateGoogleDomain < ApplicationDomain
     def initialize(credential:)
-      super
+      super()
       @credential = credential
     end
 

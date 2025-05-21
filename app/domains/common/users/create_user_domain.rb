@@ -1,7 +1,7 @@
 module Common::Users
   class CreateUserDomain < ApplicationDomain
     def initialize(params:)
-      super
+      super()
       @params = params
     end
 

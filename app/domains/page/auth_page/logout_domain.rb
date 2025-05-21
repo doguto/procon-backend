@@ -1,7 +1,7 @@
 module Page::AuthPage
   class LogoutDomain < ApplicationDomain
     def initialize(cookies)
-      super
+      super()
       @cookies = cookies
     end
 

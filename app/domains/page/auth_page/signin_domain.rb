@@ -1,7 +1,7 @@
 module Page::AuthPage
   class SigninDomain < ApplicationDomain
     def initialize(email, password)
-      super
+      super()
       @email = email
       @password = password
     end

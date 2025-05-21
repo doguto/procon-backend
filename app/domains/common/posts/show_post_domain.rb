@@ -1,7 +1,7 @@
 module Common::Posts
   class ShowPostDomain < ApplicationDomain
     def initialize(id:)
-      super
+      super()
       @id = id
     end
 

@@ -1,7 +1,7 @@
 module Common::Posts
   class UserPostDomain < ApplicationDomain
     def initialize(user_id:)
-      super
+      super()
       @user_id = user_id
     end
 

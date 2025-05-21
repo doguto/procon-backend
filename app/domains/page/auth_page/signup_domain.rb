@@ -1,7 +1,7 @@
 module Page::AuthPage
   class SignupDomain < ApplicationDomain
     def initialize(user_params)
-      super
+      super()
       @user_params = user_params
     end
 
