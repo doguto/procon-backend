@@ -1,7 +1,8 @@
 class PostDetailDto
-  def initialize(post, current_user = nil)
+  def initialize(post, current_user = nil, liked_by_current_user = false)
     @post = post
     @current_user = current_user
+    @liked_by_current_user = liked_by_current_user
   end
 
   def as_json
@@ -21,7 +22,7 @@ class PostDetailDto
       likes_count: @post.likes.count,
       reposts_count: @post.reposts.count,
       replies: @post.replies.order(created_at: :asc).map { |post| PostDetailDto.new(post, @current_user).as_json },
-      is_liked: liked_by_current_user?
+      is_liked: @liked_by_current_user
     }
   end
 
@@ -31,11 +32,5 @@ class PostDetailDto
     return false unless @current_user
 
     @current_user.following.exists?(id: @post.user.id)
-  end
-
-  def liked_by_current_user?
-    return false unless @current_user
-
-    @post.likes.exists?(user_id: @current_user.id)
   end
 end
