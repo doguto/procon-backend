@@ -7,6 +7,8 @@ class ApplicationController < ActionController::API
     header = request.headers["Authorization"]
     token = header.split.last if header
     @current_user = Page::AuthPage::SetCurrentUserDomain.new(token).execute
+  rescue StandardError
+    @current_user = nil
   end
 
   attr_reader :current_user
