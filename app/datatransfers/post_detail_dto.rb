@@ -1,5 +1,5 @@
 class PostDetailDto
-  def initialize(post, current_user = nil, liked_by_current_user = false)
+  def initialize(post, current_user: nil, liked_by_current_user: false)
     @post = post
     @current_user = current_user
     @liked_by_current_user = liked_by_current_user
