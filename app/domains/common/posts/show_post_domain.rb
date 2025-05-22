@@ -1,14 +1,9 @@
 module Common::Posts
   class ShowPostDomain < ApplicationDomain
-    def initialize(id:)
-      super()
-      @user = User.find(id)
-    end
-
-    def execute
-      post = Post.includes(:user, :replies, :likes, :reposts).find(@id)
-
-      PostDetailDto.new(post, @user)
+    def execute(id:, current_user:)
+      post = Post.includes(:user, :replies, :likes, :reposts).find(id)
+      liked = PostLikeCheckerService.new.exists?(post_id: post.id, user_id: current_user&.id)
+      PostDetailDto.new(post, current_user, liked)
     end
   end
 end

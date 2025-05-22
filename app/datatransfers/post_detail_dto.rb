@@ -1,7 +1,8 @@
 class PostDetailDto
-  def initialize(post:, current_user:)
+  def initialize(post, current_user: nil, liked_by_current_user: false)
     @post = post
     @current_user = current_user
+    @liked_by_current_user = liked_by_current_user
   end
 
   def get
@@ -16,20 +17,12 @@ class PostDetailDto
         "id" => @post.user.id,
         "name" => @post.user.name,
         "image" => @post.user.image,
-        "is_following" => following_user?
+        "is_following" => @liked_by_current_user
       }.camelize,
       "replies_count" => @post.replies.count,
       "likes_count" => @post.likes.count,
       "reposts_count" => @post.reposts.count,
       "replies" => @post.replies.order(created_at: :asc).map { |post| PostDetailDto.new(post, @current_user).get }
     }.camelize
-  end
-
-  private
-
-  def following_user?
-    return false unless @current_user
-
-    @current_user.following.exists?(id: @post.user_id)
   end
 end
