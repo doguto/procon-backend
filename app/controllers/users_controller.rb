@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def show
     user = Page::ProfilePage::ShowUserWithProfileDomain.new(user_id: params[:id]).execute
-    render json: user.as_json(include: :profile).camelize
+    render json: user.as_json(include: :profile, except: :password_digest).camelize
   end
 
   def create
