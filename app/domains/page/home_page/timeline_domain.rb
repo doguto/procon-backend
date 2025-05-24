@@ -8,7 +8,6 @@ module Page::HomePage
     def execute(current_user_id: 1)
       # 仮に現在のUserをid=1としている
       user = User.find(current_user_id)
-
       posts = Post.order(created_at: :desc).limit(50)
       dtos = []
       posts.each do |post|
